@@ -34,6 +34,8 @@ io.on('connection', function(socket) {
   console.log("A user has connected.", io.engine.clientsCount);
   // let's now emit an event to all users
   io.sockets.emit('usersConnected', io.engine.clientsCount);
+  // this is how we emit the event to just the single client
+  socket.emit('statusMessage', 'You have connected.');
 
   // a connection happens on io, a disconnect happens on an individual socket
   socket.on('disconnect', function() {
@@ -42,6 +44,9 @@ io.on('connection', function(socket) {
     io.sockets.emit('usersConnected', io.engine.clientsCount);
   });
 })
+
+// socket.emit emits to a single client
+// io.sockets.emit emits to all connected clients
 
 // we're emitting events but nobody is listening
 // next step is to set up listeners for the events on the client side
