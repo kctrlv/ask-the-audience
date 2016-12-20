@@ -1,3 +1,7 @@
+// declare empty object to store votes
+// key will be socket.id and the vote will be the value
+var votes = {};
+
 // require libraries
 const http = require('http');
 const express = require('express');
@@ -46,7 +50,11 @@ io.on('connection', function(socket) {
 
   // every call to socket.send on client triggers message event on server
   socket.on('message', function(channel, message) {
-    console.log(channel, message);
+    // console.log(channel, message);
+    if (channel === 'voteCast') {
+      votes[socket.id] = message;
+      console.log(votes);
+    }
   });
 
 
