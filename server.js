@@ -23,6 +23,22 @@ var port = process.env.PORT || 3000;
 const socketIo = require('socket.io')
 const io = socketIo(server);
 
+//   event listener for connection event
+// io.on('connection', function(socket) {
+//   console.log('A user has connected.');
+// });
+
+// a socket object is a connection to to a specific user's browser
+// the io object can also get a count of all currently connected clients
+io.on('connection', function(socket) {
+  console.log("A user has connected.", io.engine.clientsCount);
+
+  // a connection happens on io, a disconnect happens on an individual socket
+  socket.on('disconnect', function() {
+    console.log("A user has disconnected.", io.engine.clientsCount);
+  });
+})
+
 // run the server
 server.listen(port, function() {
   console.log('Listening on port ' + port + '.')
