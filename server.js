@@ -5,6 +5,8 @@ var votes = {};
 // require libraries
 const http = require('http');
 const express = require('express');
+const _ = require('lodash');
+
 
 // instantiate express
 const app = express();
@@ -58,15 +60,17 @@ io.on('connection', function(socket) {
     if (channel === 'voteCast') {
       votes[socket.userName] = message;
       console.log(votes);
+      console.log(tallyVotes(votes));
+      socket.emit('voteCount', tallyVotes(votes));
     }
   });
 })
 
-function countVotes(votes) {
-  _.reduce(votes, function(result, vote, user) {
+function tallyVotes(votes) {
+  return _.reduce(votes, function(result, vote, user) {
     result[vote] += 1;
     return result
-  }, { 'A': 0, 'B': 0, 'C': 0, 'D': 0 }
+  }, { 'A': 0, 'B': 0, 'C': 0, 'D': 0 });
 }
 
 // socket.emit emits to a single client
