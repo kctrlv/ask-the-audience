@@ -19,6 +19,10 @@ var server = http.createServer(app);
 // pass a port set in env vars || fallback port
 var port = process.env.PORT || 3000;
 
+// set up Socket.io
+const socketIo = require('socket.io')
+const io = socketIo(server);
+
 // run the server
 server.listen(port, function() {
   console.log('Listening on port ' + port + '.')
