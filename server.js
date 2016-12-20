@@ -60,9 +60,14 @@ io.on('connection', function(socket) {
       console.log(votes);
     }
   });
-
-
 })
+
+function countVotes(votes) {
+  _.reduce(votes, function(result, vote, user) {
+    result[vote] += 1;
+    return result
+  }, { 'A': 0, 'B': 0, 'C': 0, 'D': 0 }
+}
 
 // socket.emit emits to a single client
 // io.sockets.emit emits to all connected clients
