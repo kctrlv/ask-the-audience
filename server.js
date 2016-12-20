@@ -32,12 +32,19 @@ const io = socketIo(server);
 // the io object can also get a count of all currently connected clients
 io.on('connection', function(socket) {
   console.log("A user has connected.", io.engine.clientsCount);
+  // let's now emit an event to all users
+  io.sockets.emit('usersConnected', io.engine.clientsCount);
 
   // a connection happens on io, a disconnect happens on an individual socket
   socket.on('disconnect', function() {
     console.log("A user has disconnected.", io.engine.clientsCount);
+    // and let's emit after a user disconnects as well
+    io.sockets.emit('usersConnected', io.engine.clientsCount);
   });
 })
+
+// we're emitting events but nobody is listening
+// next step is to set up listeners for the events on the client side
 
 // run the server
 server.listen(port, function() {
