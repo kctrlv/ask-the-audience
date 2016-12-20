@@ -35,7 +35,8 @@ const io = socketIo(server);
 // a socket object is a connection to to a specific user's browser
 // the io object can also get a count of all currently connected clients
 io.on('connection', function(socket) {
-  console.log("A user has connected.", io.engine.clientsCount);
+  socket.userName = socket.id.substring(0, 4)
+  console.log("Connected: " + socket.userName + ".", io.engine.clientsCount);
   // let's now emit an event to all users
   io.sockets.emit('usersConnected', io.engine.clientsCount);
   // this is how we emit the event to just the single client
@@ -43,16 +44,19 @@ io.on('connection', function(socket) {
 
   // a connection happens on io, a disconnect happens on an individual socket
   socket.on('disconnect', function() {
-    console.log("A user has disconnected.", io.engine.clientsCount);
+    console.log("Disconnected: " + socket.userName + ".", io.engine.clientsCount);
     // and let's emit after a user disconnects as well
     io.sockets.emit('usersConnected', io.engine.clientsCount);
+    // and lets delete the user's vote if they leave
+    delete votes[socket.userName];
+    console.log(votes);
   });
 
   // every call to socket.send on client triggers message event on server
   socket.on('message', function(channel, message) {
     // console.log(channel, message);
     if (channel === 'voteCast') {
-      votes[socket.id] = message;
+      votes[socket.userName] = message;
       console.log(votes);
     }
   });
