@@ -21,3 +21,22 @@ socket.on('statusMessage', pageUpdateStatus)
 function pageUpdateStatus(message) {
   document.getElementById('status-message').innerText = message
 }
+
+// right now client is listening for the server events and updating the page
+// lets have the client send events to the server
+
+// first we should add event listeners to all the buttons
+var buttons = document.querySelectorAll('#choices button');
+
+for (var i = 0; i < buttons.length; i++) {
+  // buttons[i].addEventListener('click', function() {
+  //   console.log(this.innerText);
+  // });
+
+  buttons[i].addEventListener('click', consoleLogInnerText );
+
+  function consoleLogInnerText() {
+    console.log(this.innerText);
+  }
+
+}
