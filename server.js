@@ -43,13 +43,17 @@ io.on('connection', function(socket) {
     // and let's emit after a user disconnects as well
     io.sockets.emit('usersConnected', io.engine.clientsCount);
   });
+
+  // every call to socket.send on client triggers message event on server
+  socket.on('message', function(channel, message) {
+    console.log(channel, message);
+  });
+
+
 })
 
 // socket.emit emits to a single client
 // io.sockets.emit emits to all connected clients
-
-// we're emitting events but nobody is listening
-// next step is to set up listeners for the events on the client side
 
 // run the server
 server.listen(port, function() {
