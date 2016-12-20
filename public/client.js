@@ -33,10 +33,19 @@ for (var i = 0; i < buttons.length; i++) {
   //   console.log(this.innerText);
   // });
 
-  buttons[i].addEventListener('click', consoleLogInnerText );
+  // buttons[i].addEventListener('click', consoleLogInnerText );
+  //
+  // function consoleLogInnerText() {
+  //   console.log(this.innerText);
+  // }
 
-  function consoleLogInnerText() {
-    console.log(this.innerText);
+  buttons[i].addEventListener('click', socketSendVoteCast );
+
+  function socketSendVoteCast() {
+    socket.send('voteCast', this.innerText);
   }
+
+
+
 
 }
