@@ -25,7 +25,10 @@ socket.on('voteCount', pageUpdateVoteCount )
 function pageUpdateVoteCount(votes) {
   // console.log('here are the votes: ')
   // console.log(votes);
-  
+  document.getElementById('votes-tally-a').innerText = 'A: ' + votes['A']
+  document.getElementById('votes-tally-b').innerText = 'B: ' + votes['B']
+  document.getElementById('votes-tally-c').innerText = 'C: ' + votes['C']
+  document.getElementById('votes-tally-d').innerText = 'D: ' + votes['D']
 }
 
 // right now client is listening for the server events and updating the page

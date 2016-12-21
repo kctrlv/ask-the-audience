@@ -7,7 +7,6 @@ const http = require('http');
 const express = require('express');
 const _ = require('lodash');
 
-
 // instantiate express
 const app = express();
 
@@ -61,7 +60,7 @@ io.on('connection', function(socket) {
       votes[socket.userName] = message;
       console.log(votes);
       console.log(tallyVotes(votes));
-      socket.emit('voteCount', tallyVotes(votes));
+      io.sockets.emit('voteCount', tallyVotes(votes));
     }
   });
 })
