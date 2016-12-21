@@ -11,7 +11,7 @@ var socket = io();
 // listen for the server event to all users and update the html
 socket.on('usersConnected', pageUpdateCount )
 function pageUpdateCount(count) {
-  document.getElementById('connection-count').innerText = "Connected Users: " + count;
+  $('#connection-count').innerText = "Connected Users: " + count;
 }
 
 // listen for the server event to me about my status

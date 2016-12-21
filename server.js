@@ -1,6 +1,8 @@
 // declare empty object to store votes
 // key will be socket.id and the vote will be the value
 var votes = {};
+var $ = require("jquery");
+
 
 // require libraries
 const http = require('http');
