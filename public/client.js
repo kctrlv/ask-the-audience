@@ -31,6 +31,14 @@ function pageUpdateVoteCount(voteCount) {
   document.getElementById('votes-tally-d').innerText = 'D: ' + voteCount['D']
 }
 
+socket.on('userSpeak', pageAppendUserChat )
+function pageAppendUserChat([user, message]) {
+  document.getElementById('chatbox').innerText = user + ': ' + message
+}
+
+
+
+
 // right now client is listening for the server events and updating the page
 // lets have the client send events to the server
 
