@@ -22,13 +22,13 @@ function pageUpdateStatus(message) {
 
 // listen for the total votecount event
 socket.on('voteCount', pageUpdateVoteCount )
-function pageUpdateVoteCount(votes) {
+function pageUpdateVoteCount(voteCount) {
   // console.log('here are the votes: ')
   // console.log(votes);
-  document.getElementById('votes-tally-a').innerText = 'A: ' + votes['A']
-  document.getElementById('votes-tally-b').innerText = 'B: ' + votes['B']
-  document.getElementById('votes-tally-c').innerText = 'C: ' + votes['C']
-  document.getElementById('votes-tally-d').innerText = 'D: ' + votes['D']
+  document.getElementById('votes-tally-a').innerText = 'A: ' + voteCount['A']
+  document.getElementById('votes-tally-b').innerText = 'B: ' + voteCount['B']
+  document.getElementById('votes-tally-c').innerText = 'C: ' + voteCount['C']
+  document.getElementById('votes-tally-d').innerText = 'D: ' + voteCount['D']
 }
 
 // right now client is listening for the server events and updating the page
@@ -44,3 +44,27 @@ for (var i = 0; i < buttons.length; i++) {
     socket.send('voteCast', this.innerText);
   }
 }
+
+// add listener for chat field
+document.getElementById('chat').addEventListener('keypress', socketSendChat)
+
+function socketSendChat(event) {
+  if (event.keyCode == 13) {
+    if (event.target.value) {
+      socket.send('chat', event.target.value)
+    }
+    event.target.value = ''
+    event.preventDefault()
+  }
+}
+
+
+
+
+// $(document).on "keypress", '[data-behavior~=lobby_speaker]', (event) ->
+//   if event.keyCode is 13
+//     if event.target.value
+//       App.lobby.speak event.target.value
+//     event.target.value = ''
+//     event.preventDefault()
+//
