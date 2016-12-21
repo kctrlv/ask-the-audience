@@ -55,12 +55,15 @@ io.on('connection', function(socket) {
 
   // every call to socket.send on client triggers message event on server
   socket.on('message', function(channel, message) {
-    // console.log(channel, message);
+    console.log(channel, message);
     if (channel === 'voteCast') {
       votes[socket.userName] = message;
       console.log(votes);
       console.log(tallyVotes(votes));
       io.sockets.emit('voteCount', tallyVotes(votes));
+    } else if (channel == 'chat') {
+      user = socket.userName
+      io.sockets.emit('userSpeak', [user, message])
     }
   });
 })
